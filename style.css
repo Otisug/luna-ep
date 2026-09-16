@@ -198,3 +198,34 @@ h1 {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+/* --- Cuenta Regresiva --- */
+.countdown-container {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 18px 0 10px;
+}
+
+.timer-box {
+  background: rgba(255, 255, 255, 0.75);
+  padding: 8px 12px;
+  border-radius: 12px;
+  min-width: 65px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.timer-box span {
+  display: block;
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: var(--text-dark);
+}
+
+.timer-box small {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: #666;
+  font-weight: 600;
+}
