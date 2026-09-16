@@ -11,7 +11,39 @@ document.addEventListener("DOMContentLoaded", () => {
     petalsContainer.appendChild(petal);
   }
 
-  // 2. Sistema de partículas dinámico con respuesta al cursor
+  // 2. Lógica del Contador Regresivo (21 de Septiembre)
+  const currentYear = new Date().getFullYear();
+  const targetDate = new Date(`September 21, ${currentYear} 00:00:00`).getTime();
+
+  function updateCountdown() {
+    const now = new Date().getTime();
+    const difference = targetDate - now;
+
+    if (difference <= 0) {
+      document.getElementById("days").innerText = "00";
+      document.getElementById("hours").innerText = "00";
+      document.getElementById("minutes").innerText = "00";
+      document.getElementById("seconds").innerText = "00";
+      const textElem = document.getElementById("release-text");
+      if (textElem) textElem.innerText = "¡El EP ya está disponible! Dale play y contame qué te parece.";
+      return;
+    }
+
+    const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+    document.getElementById("days").innerText = days < 10 ? `0${days}` : days;
+    document.getElementById("hours").innerText = hours < 10 ? `0${hours}` : hours;
+    document.getElementById("minutes").innerText = minutes < 10 ? `0${minutes}` : minutes;
+    document.getElementById("seconds").innerText = seconds < 10 ? `0${seconds}` : seconds;
+  }
+
+  setInterval(updateCountdown, 1000);
+  updateCountdown();
+
+  // 3. Sistema de partículas dinámico con respuesta al cursor
   const canvas = document.getElementById("canvas-petals");
   const ctx = canvas.getContext("2d");
 
@@ -23,7 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("resize", resizeCanvas);
 
   const particles = [];
-  const baseParticleCount = 60; // Aumentamos la cantidad base general
+  const baseParticleCount = 60;
 
   class Particle {
     constructor(x, y, isMouseSpawn = false) {
@@ -36,11 +68,10 @@ document.addEventListener("DOMContentLoaded", () => {
       this.y = y !== undefined ? y : Math.random() * -canvas.height;
       this.size = Math.random() * 9 + 5;
       
-      // Si nace del mouse, tiene un impulso más dinámico
       if (this.isMouseSpawn) {
         this.speedY = Math.random() * 2 + 1;
         this.speedX = (Math.random() - 0.5) * 3;
-        this.life = 1; // Para que desaparezcan gradualmente
+        this.life = 1;
         this.decay = Math.random() * 0.015 + 0.005;
       } else {
         this.speedY = Math.random() * 1.8 + 0.8;
@@ -63,10 +94,8 @@ document.addEventListener("DOMContentLoaded", () => {
         this.life -= this.decay;
       }
 
-      // Reiniciar si cae fuera de pantalla o expiró su vida
       if (this.y > canvas.height + 20 || this.life <= 0) {
         if (this.isMouseSpawn) {
-          // Eliminar de la lista si fue creado por el mouse
           const index = particles.indexOf(this);
           if (index > -1) particles.splice(index, 1);
         } else {
@@ -88,17 +117,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Cargar lluvia inicial
   for (let i = 0; i < baseParticleCount; i++) {
     particles.push(new Particle());
   }
 
-  // Generar pétalos al mover el mouse o tocar la pantalla
   function spawnMousePetals(e) {
     const clientX = e.touches ? e.touches[0].clientX : e.clientX;
     const clientY = e.touches ? e.touches[0].clientY : e.clientY;
 
-    // Genera 2 pétalos por cada evento de movimiento
     for (let i = 0; i < 2; i++) {
       const offsetX = (Math.random() - 0.5) * 30;
       const offsetY = (Math.random() - 0.5) * 30;
@@ -109,11 +135,8 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("mousemove", spawnMousePetals);
   window.addEventListener("touchmove", spawnMousePetals);
 
-  // Bucle de animación
   function animate() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
-    // Recorremos a la inversa para poder eliminar elementos de forma segura
     for (let i = particles.length - 1; i >= 0; i--) {
       particles[i].update();
       if (particles[i]) {
