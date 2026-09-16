@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>¡Feliz Primavera & Lanzamiento EP!</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Fondo animado para pétalos cayendo/flotando -->
+  <canvas id="canvas-petals"></canvas>
+
+  <!-- Tarjeta Principal -->
+  <main class="card">
+    <div class="header">
+      <span class="badge">21 de Septiembre</span>
+      <h1>Primavera 🌻</h1>
+      <p class="subtitle">Aunque de este lado arranque el otoño, hay canciones nuevas.</p>
+    </div>
+
+    <!-- Animación del Girasol -->
+    <div class="sunflower-container">
+      <div class="sunflower">
+        <div class="flower-center"></div>
+        <div class="petals" id="petals"></div>
+      </div>
+      <div class="stem"></div>
+      <div class="leaf leaf-left"></div>
+      <div class="leaf leaf-right"></div>
+    </div>
+
+    <!-- Sección del Lanzamiento del EP -->
+    <section class="ep-release">
+      <h2>Salió mi EP</h2>
+      <p>Estuve armando estos temas hace tiempo y hoy por fin salen a la luz. Vayan a escucharlos y disfruten o simplemente tiren hate :)</p>
+      
+      <a href="https://open.spotify.com/album/5CwFKggVaKTUqK1P8tBMvN" target="_blank" rel="noopener noreferrer" class="btn-listen">
+        <svg class="icon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+          <path d="M8 5v14l11-7z"/>
+        </svg>
+        Escuchar ahora
+      </a>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
